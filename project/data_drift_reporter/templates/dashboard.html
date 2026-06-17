@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Data Drift Reporter{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block page_subtitle %}Overview of monitored datasets and data quality{% endblock %}
+
+{% block content %}
+
+<!-- Summary cards -->
+<div class="row g-4 mb-4">
+  <div class="col-md-3">
+    <div class="stat-card stat-blue">
+      <div class="stat-icon"><i class="fa-solid fa-database"></i></div>
+      <div class="stat-info">
+        <div class="stat-value" id="stat-total-datasets">-</div>
+        <div class="stat-label">Datasets Monitored</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card stat-green">
+      <div class="stat-icon"><i class="fa-solid fa-layer-group"></i></div>
+      <div class="stat-info">
+        <div class="stat-value" id="stat-total-snapshots">-</div>
+        <div class="stat-label">Total Snapshots</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card stat-orange">
+      <div class="stat-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      <div class="stat-info">
+        <div class="stat-value" id="stat-drift-alerts">-</div>
+        <div class="stat-label">Drift Alerts</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card stat-purple">
+      <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
+      <div class="stat-info">
+        <div class="stat-value" id="stat-latest-level">-</div>
+        <div class="stat-label" id="stat-latest-name">Latest Drift Report</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Latest AI report -->
+<div class="card mb-4">
+  <div class="card-header">
+    <i class="fa-solid fa-robot"></i> Latest AI Drift Narrative
+  </div>
+  <div class="card-body">
+    <p id="latest-report-text" class="mb-0 text-muted">No drift reports yet. Upload a dataset and generate a second snapshot to see AI narration here.</p>
+  </div>
+</div>
+
+<!-- Datasets table -->
+<div class="card mb-4">
+  <div class="card-header">
+    <i class="fa-solid fa-table"></i> Monitored Datasets
+  </div>
+  <div class="card-body p-0">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>Dataset</th>
+          <th>Row Count</th>
+          <th>Snapshots</th>
+          <th>Last Drift Score</th>
+          <th>Drift Level</th>
+          <th>Last Snapshot</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="datasets-table-body">
+        <tr><td colspan="7" class="text-center text-muted py-4">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Charts -->
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-chart-line"></i> Drift Trend</div>
+      <div class="card-body"><canvas id="driftTrendChart"></canvas></div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-chart-line"></i> Null Rate Trend</div>
+      <div class="card-body"><canvas id="nullRateChart"></canvas></div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-chart-line"></i> Row Count Trend</div>
+      <div class="card-body"><canvas id="rowCountChart"></canvas></div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

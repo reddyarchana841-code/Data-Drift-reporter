@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Data Drift Reporter{% endblock %}</title>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <div class="app-wrapper">
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="sidebar-brand">
+        <i class="fa-solid fa-wave-square"></i>
+        <span>Data Drift<br>Reporter</span>
+      </div>
+      <ul class="sidebar-nav">
+        <li class="{{ 'active' if active_page == 'dashboard' else '' }}">
+          <a href="{{ url_for('index') }}"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+        </li>
+        <li class="{{ 'active' if active_page == 'upload' else '' }}">
+          <a href="{{ url_for('upload_page') }}"><i class="fa-solid fa-cloud-arrow-up"></i> Upload Dataset</a>
+        </li>
+        <li class="{{ 'active' if active_page == 'datasets' else '' }}">
+          <a href="{{ url_for('datasets_page') }}"><i class="fa-solid fa-database"></i> Datasets</a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <i class="fa-solid fa-robot"></i> AI-powered drift detection
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="main-content">
+      <header class="topbar">
+        <h1>{% block page_title %}Dashboard{% endblock %}</h1>
+        <div class="topbar-sub">{% block page_subtitle %}Overview of monitored datasets and data quality{% endblock %}</div>
+      </header>
+
+      <div class="content-body">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

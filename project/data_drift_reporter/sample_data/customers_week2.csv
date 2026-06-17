@@ -1,0 +1,9 @@
+customer_id,name,email,age,signup_date,country
+11,Kate Young,kate@example.com,48,2024-03-10,USA
+12,Leo Turner,,55,2024-03-12,UK
+13,Mona Diaz,mona@example.com,60,2024-03-15,USA
+14,Nina Patel,,47,2024-03-18,India
+15,Oscar Reed,oscar@example.com,52,2024-03-20,Canada
+16,Paul Scott,paul@example.com,58,2024-03-25,USA
+17,Quinn Hall,,49,2024-03-28,UK
+18,Rita Moss,rita@example.com,63,2024-04-01,USA

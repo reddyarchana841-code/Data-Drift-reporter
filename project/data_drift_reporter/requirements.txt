@@ -1,0 +1,12 @@
+Flask==3.0.3
+Flask-SQLAlchemy==3.1.1
+SQLAlchemy==2.0.30
+pandas==2.2.2
+numpy==1.26.4
+fpdf2==2.7.9
+Werkzeug==3.0.3
+
+# Optional - only needed if you want LLM-powered narration via Claude.
+# If not installed (or ANTHROPIC_API_KEY is not set), the app automatically
+# falls back to the built-in rule-based narration templates.
+anthropic==0.34.2

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Upload Dataset - Data Drift Reporter{% endblock %}
+{% block page_title %}Upload Dataset{% endblock %}
+{% block page_subtitle %}Add a new CSV dataset for monitoring{% endblock %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-7">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-cloud-arrow-up"></i> Upload CSV</div>
+      <div class="card-body">
+
+        <div id="upload-alert" class="alert d-none" role="alert"></div>
+
+        <form id="upload-form">
+          <div class="mb-3">
+            <label for="dataset_name" class="form-label">Dataset Name</label>
+            <input type="text" class="form-control" id="dataset_name" name="dataset_name"
+                   placeholder="e.g. Orders Table, Customer Records">
+            <div class="form-text">If left blank, the file name will be used.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="file" class="form-label">CSV File</label>
+            <input type="file" class="form-control" id="file" name="file" accept=".csv" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-upload"></i> Upload &amp; Generate Snapshot
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-circle-info"></i> How it works</div>
+      <div class="card-body">
+        <ol class="mb-0">
+          <li>Upload a CSV file representing a snapshot of a business table.</li>
+          <li>The system validates the schema and stores the file.</li>
+          <li>Row count, null %, mean/median/std, and unique value counts are computed automatically.</li>
+          <li>If a previous snapshot exists, the system compares it to the new one and computes a drift score.</li>
+          <li>An AI narration module generates a business-friendly summary of any changes.</li>
+        </ol>
+        <hr>
+        <p class="text-muted mb-0">
+          <strong>Tip:</strong> Try uploading <code>sample_data/orders_week1.csv</code> first, then
+          re-upload <code>sample_data/orders_week2.csv</code> with the same dataset name (or use
+          "Generate New Snapshot" on the dataset detail page) to see drift detection in action.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+{% endblock %}

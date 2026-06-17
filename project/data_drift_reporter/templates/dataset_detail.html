@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block title %}{{ dataset.dataset_name }} - Data Drift Reporter{% endblock %}
+{% block page_title %}{{ dataset.dataset_name }}{% endblock %}
+{% block page_subtitle %}Snapshot history, drift analysis, and AI reports{% endblock %}
+
+{% block content %}
+
+<div id="dataset-id" data-id="{{ dataset.id }}" class="d-none"></div>
+
+<div class="row g-4 mb-4">
+  <div class="col-md-3">
+    <div class="stat-card stat-blue">
+      <div class="stat-icon"><i class="fa-solid fa-list-ol"></i></div>
+      <div class="stat-info">
+        <div class="stat-value" id="d-row-count">-</div>
+        <div class="stat-label">Current Row Count</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card stat-green">
+      <div class="stat-icon"><i class="fa-solid fa-percent"></i></div>
+      <div class="stat-info">
+        <div class="stat-value" id="d-null-rate">-</div>
+        <div class="stat-label">Overall Null Rate</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card stat-orange">
+      <div class="stat-icon"><i class="fa-solid fa-bolt"></i></div>
+      <div class="stat-info">
+        <div class="stat-value" id="d-drift-score">-</div>
+        <div class="stat-label">Latest Drift Score</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card stat-purple">
+      <div class="stat-icon"><i class="fa-solid fa-layer-group"></i></div>
+      <div class="stat-info">
+        <div class="stat-value" id="d-snapshot-count">-</div>
+        <div class="stat-label">Total Snapshots</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col-12 d-flex gap-2 align-items-center flex-wrap">
+    <button id="generate-snapshot-btn" class="btn btn-primary">
+      <i class="fa-solid fa-rotate"></i> Generate New Snapshot (same data)
+    </button>
+    <a id="download-pdf-btn" href="{{ url_for('download_pdf_report', dataset_id=dataset.id) }}" class="btn btn-outline-secondary">
+      <i class="fa-solid fa-file-pdf"></i> Download PDF Drift Report
+    </a>
+    <a id="download-csv-btn" href="{{ url_for('download_csv_report', dataset_id=dataset.id) }}" class="btn btn-outline-secondary">
+      <i class="fa-solid fa-file-csv"></i> Download CSV Snapshot Report
+    </a>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header"><i class="fa-solid fa-file-csv"></i> Update with New Data (e.g. this week's file)</div>
+  <div class="card-body">
+    <div id="update-alert" class="alert d-none" role="alert"></div>
+    <form id="update-data-form" class="d-flex gap-2 align-items-end flex-wrap">
+      <div class="flex-grow-1">
+        <label for="update-file" class="form-label">Upload updated CSV for this dataset</label>
+        <input type="file" class="form-control" id="update-file" name="file" accept=".csv" required>
+      </div>
+      <button type="submit" class="btn btn-success">
+        <i class="fa-solid fa-upload"></i> Upload &amp; Generate New Snapshot
+      </button>
+    </form>
+    <div class="form-text mt-2">
+      This replaces the dataset's data with the new file and immediately compares it
+      against the previous snapshot to compute drift and generate an AI narrative.
+    </div>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header"><i class="fa-solid fa-robot"></i> Latest AI Drift Narrative</div>
+  <div class="card-body">
+    <p id="report-text" class="mb-0 text-muted" style="white-space: pre-line;">No drift report yet.</p>
+  </div>
+</div>
+
+<div class="row g-4 mb-4">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">Drift Trend</div>
+      <div class="card-body"><canvas id="driftChart"></canvas></div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">Null Rate Trend</div>
+      <div class="card-body"><canvas id="nullChart"></canvas></div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">Row Count Trend</div>
+      <div class="card-body"><canvas id="rowChart"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header"><i class="fa-solid fa-table"></i> Snapshot History</div>
+  <div class="card-body p-0">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Row Count</th>
+          <th>Null Rate</th>
+          <th>Mean</th>
+          <th>Drift Score</th>
+        </tr>
+      </thead>
+      <tbody id="snapshot-history-body">
+        <tr><td colspan="5" class="text-center text-muted py-4">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header"><i class="fa-solid fa-clock-rotate-left"></i> Drift Report History</div>
+  <div class="card-body p-0">
+    <div id="report-history" class="list-group list-group-flush"></div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/dataset_detail.js') }}"></script>
+{% endblock %}

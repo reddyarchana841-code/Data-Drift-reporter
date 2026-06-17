@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Datasets - Data Drift Reporter{% endblock %}
+{% block page_title %}Datasets{% endblock %}
+{% block page_subtitle %}All datasets currently being monitored{% endblock %}
+
+{% block content %}
+
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span><i class="fa-solid fa-database"></i> All Datasets</span>
+    <a href="{{ url_for('upload_page') }}" class="btn btn-sm btn-primary">
+      <i class="fa-solid fa-plus"></i> Add Dataset
+    </a>
+  </div>
+  <div class="card-body p-0">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Uploaded</th>
+          <th>Row Count</th>
+          <th>Columns</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="datasets-list-body">
+        <tr><td colspan="6" class="text-center text-muted py-4">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/datasets.js') }}"></script>
+{% endblock %}

@@ -8,18 +8,7 @@ Python + Flask web app to detect data drift between two CSV datasets using stati
 [view resume](https://drive.google.com/file/d/1AQ-1rxT-aXzyTQ9DXZtV5lv8q1te8Vxk/view?usp=drivesdk)
 
 ### case study outputs
-
-## 📊 Case Study & Output Screenshots
-
-### **1. Dataset Comparison View**
-Upload baseline & current CSV files. Tool automatically detects columns & data types.
-![Dataset Upload](output/drift_datasets.png)
-
-### **2. Drift Analysis Dashboard** 
-Statistical comparison with PSI, KS-Test scores. Drifted columns highlighted in red.
-![Drift Dashboard](output/drift_dashboard.png)
-![Detailed Stats](output/drift_dashboard_2.png)
-
-### **3. Visual Report**
-Auto-generated HTML report with charts showing distribution shifts.
-![Dataset Summary](output/drift_datasets_2.png)
+[view outputs] (https://drive.google.com/file/d/1ey43Zv4CsrY3bW6gv-uVusk9AjR8rC97/view?usp=drivesdk)
+[view outputs] (https://drive.google.com/file/d/1tgJao6pVvcjwWWpRZeGQ-hr5_2Oqj9n0/view?usp=drivesdk)
+[view outputs]  (https://drive.google.com/file/d/1yYMXNVwitI5z_wRZwy2CejOKpMP2Oa5a/view?usp=drivesdk)
+[view outputs]  (https://drive.google.com/file/d/1Lu1nVau1oMTHifQva-iWA5XbSkFS87UC/view?usp=drivesdk)
